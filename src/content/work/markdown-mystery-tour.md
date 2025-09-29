@@ -1,35 +1,43 @@
 ---
-title: Markdown Mystery Tour
-publishDate: 2020-03-02 00:00:00
+title: Ensuring Fairness in Pose Estimation Models for Diverse Populations
+publishDate: 2025-09-12 16:00:00
 img: /assets/stock-1.jpg
 img_alt: Iridescent ripples of a bright blue and pink liquid
 description: |
-  We designed a whodunnit-style game to introduce Markdown formatting. Suspense — suspicion — syntax!
+  We designed an end-to-end pipeline to assess the balance of Human Pose Estimation (HPE) datasets.
 tags:
-  - Design
-  - Dev
-  - User Testing
+  - Artificial Intelligence 
+  - Medical
+  - PyTorch
 ---
 
-## Level-two heading
+## Fairness in HPE 
 
-> Tell me and I forget. Teach me and I remember. Involve me and I learn.
+> Despite remarkable progress, human pose estimation remains a challenging task.
 
-Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes people happy. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin nibh nisl condimentum id venenatis a condimentum vitae. Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla pharetra diam sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare.
+Despite remarkable progress driven by deep learning, human pose estimation remains a challenging task. The diversity of human appearances, clothing, and body shapes introduces significant variability. In addition, the human body exhibits complex articulations, making it difficult to accurately capture fine-grained joint dependencies. These challenges are amplified when datasets are imbalanced or lack representative coverage of poses, leading to biased models. 
 
-Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget gravida cum sociis natoque penatibus. Cras fermentum odio eu feugiat pretium nibh. Proin nibh nisl condimentum id venenatis. Porta nibh venenatis cras sed felis eget velit. Id diam vel quam elementum pulvinar etiam non.
+Our work addresses these issues by designing an end-to-end pipeline that not only evaluates dataset balance but also performs data augmentation through image generation, thereby improving the diversity and representativeness of human pose estimation datasets.
 
-### Level-three heading
+### COCO Dataset
 
-Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut sem viverra aliquet eget sit amet. Lacus luctus accumsan tortor posuere ac ut consequat semper viverra. Viverra accumsan in nisl nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl pretium fusce.
+The **COCO (Common Objects in Context)** dataset is one of the most widely used benchmarks in computer vision, covering tasks such as object detection, segmentation, captioning, and crucially **keypoint detection** for human pose estimation. [COCO official website](https://cocodataset.org/?utm_source=chatgpt.com)  
 
-### Level-three heading
+In the COCO keypoints format, each annotated person is described by **17 body keypoints** (e.g., nose, eyes, shoulders, elbows, wrists, hips, knees, ankles), each specified by an (x, y) coordinate and a visibility flag. [COCO keypoints guide](https://www.v7labs.com/blog/coco-dataset-guide?utm_source=chatgpt.com)  
 
-Sed pulvinar porttitor mi in ultricies. Etiam non dolor gravida eros pulvinar pellentesque et dictum ex. Proin eu ornare ligula, sed condimentum dui. Vivamus tincidunt tellus mi, sed semper ipsum pharetra a. Suspendisse sollicitudin at sapien nec volutpat. Etiam justo urna, laoreet ac lacus sed, ultricies facilisis dolor. Integer posuere, metus vel viverra gravida, risus elit ornare magna, id feugiat erat risus ullamcorper libero. Proin vitae diam auctor, laoreet lorem vitae, varius tellus.
+This format allows models to learn to localize human joints in varied scenes. To evaluate pose estimators, COCO uses a metric called **Object Keypoint Similarity (OKS)**, which compares predicted vs. ground-truth keypoints while accounting for object scale and visibility. [OKS explanation](https://learnopencv.com/object-keypoint-similarity/?utm_source=chatgpt.com)  
 
-Aenean pretium purus augue, ut bibendum erat convallis quis. Cras condimentum quis velit ac mollis. Suspendisse non purus fringilla, venenatis nisl porta, finibus odio. Curabitur aliquet metus faucibus libero interdum euismod. Morbi sed magna nisl. Morbi odio nibh, facilisis vel sapien eu, tempus tincidunt erat. Nullam erat velit, sagittis at purus quis, tristique scelerisque tortor. Pellentesque lacinia tortor id est aliquam viverra. Vestibulum et diam ac ipsum mollis fringilla.
+Because of its scale, annotation quality, and standard evaluation protocols, COCO has become a de facto reference for human pose estimation research.
 
-#### Level-four heading
+#### Dataset Evaluation
+
+Evaluating the quality and representativeness of human pose estimation datasets is a crucial step toward building reliable models. In our work, we focus on several human-centered and visual attributes that can significantly impact performance: age, gender, body shape, and clothing-to-background contrast. These factors introduce strong variability in appearance and, if imbalanced, can bias the learning process. To systematically assess them, we leverage machine learning models trained to classify these attributes directly from the dataset images. By analyzing the resulting class distributions, we are able to detect overrepresented and underrepresented categories, highlight potential dataset biases, and provide a quantitative basis for further balancing strategies.
+
+#### Dataset balancing
+
+Once imbalances are identified, the next step is to mitigate them through dataset balancing. In our approach, we employ data augmentation via image generation, ensuring a more diverse and representative sample space. For this purpose, we adopt the COCO (Common Objects in Context) annotation format, a widely used standard in computer vision that provides detailed keypoint annotations for human pose estimation. By generating new images with corresponding COCO-style annotations, we are able to enrich minority classes and reduce distributional gaps highlighted during the evaluation phase. This strategy not only improves dataset diversity but also enhances the robustness of pose estimation models trained on the augmented data.
+
+#### Results
 
 - We noted this
 - And also this other point
